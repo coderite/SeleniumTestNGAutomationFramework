@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite data-provider-thread-count="3" name="Suite">
+
+    <listeners>
+        <listener class-name="sadilek.testcomponents.Listeners" />
+    </listeners>
+    
+    <test name="Product Filter Test">
+        <classes>
+            <class name="sadilek.tests.ProductFilterTest" />
+        </classes>
+    </test>
+</suite>

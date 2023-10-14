@@ -1,0 +1,43 @@
+# Compiled bytecode files
+*.class
+
+# Log files
+*.log
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IDE specific files (Eclipse, IntelliJ, VS Code, etc.)
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+.vscode/
+
+# Build directories (Maven, Gradle, etc.)
+target/
+build/
+out/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Test output files
+test-output/
+reports/
