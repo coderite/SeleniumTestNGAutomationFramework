@@ -138,7 +138,7 @@ public class ProductFilterTest extends BaseTest {
      * Data provider for the testProductFilters method
      * 
      * Data provider retrieves test cases (data) from an Excel file defined during
-     * the MVN cli initialization or from the GlobalData.properties document.
+     * the MVN cli initialization or from the settings.properties document.
      * 
      * @return Object[][] (2D object array) containing the test case data for each
      *         test

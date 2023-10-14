@@ -1,3 +1,7 @@
+# overview
+
+A Selenium TestNG Automation framework that asserts product relevancy of filtered seach results.
+
 # commands to run tests
 
 - mvn -Pregression -Dbrowser=chrome
@@ -44,20 +48,8 @@
 
 # TODO
 
-- clean up ParfumPage class DONE
-- check chrome parallel flakiness DONE
-- ask Adonis about the fur Wen data, that you are almost ready with the code DONE
-- update modal exceptions retry feature. Retry X times each time there is an exception on the modal page. This seems to be due to bot detection by Douglas. DONE
-- add screenshot capability DONE
-- update filenames of Extent Reports to include browser DONE
-- Extent Reports first TC fix browerName null issue DONE
-- skip test info omits browser name DONE
-- make decision about assert logic for 404 products and OUT OF STOCK DONE
-- add a check that all the facets we wanted to select have been set DONE
-- close button is flaky - DONE
-
 - update retry mechanism to get variable from properties file
 
-- push to github
+- push to github DONE
 - finish ReadMe
-- send full project details to Adonis and Co
+- send full project details to director and Co

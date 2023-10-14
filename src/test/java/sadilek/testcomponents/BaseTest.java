@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ThreadGuard;
@@ -52,7 +53,7 @@ public class BaseTest {
          */
         try {
             FileInputStream fis = new FileInputStream(
-                    System.getProperty("user.dir") + "/src/main/java/sadilek/resources/GlobalData.properties");
+                    System.getProperty("user.dir") + "/src/main/java/sadilek/resources/settings.properties");
             properties = new Properties();
             properties.load(fis);
         } catch (Exception ex) {
@@ -93,7 +94,7 @@ public class BaseTest {
 
         /*
          * if the browser variable is being set using the MVN command, use that.
-         * Otherwise, get the browser value from the GlobalData.properties value
+         * Otherwise, get the browser value from the settings.properties value
          */
         String browserName = getProperty("browser");
 
@@ -127,17 +128,23 @@ public class BaseTest {
                 options.addArguments("-headless");
                 driver.set(ThreadGuard.protect(new FirefoxDriver(options)));
                 driver.get().manage().window().setSize(new Dimension(1900, 1200)); // resize the window
-                                                                                   // for headless
             } else {
                 driver.set(ThreadGuard.protect(new FirefoxDriver()));
                 /* maximize the window so that elements get maximum visibilty */
                 driver.get().manage().window().maximize();
             }
-        } else if (browserName.equals("edge")) {
+        } else if (browserName.contains("edge")) {
             WebDriverManager.edgedriver().setup();
-            driver.set(ThreadGuard.protect(new EdgeDriver()));
-            /* maximize the window so that elements get maximum visibilty */
-            driver.get().manage().window().maximize();
+            if (browserName.contains("headless")) {
+                EdgeOptions options = new EdgeOptions();
+                options.addArguments("--headless");
+                driver.set(ThreadGuard.protect(new EdgeDriver(options)));
+                driver.get().manage().window().setSize(new Dimension(1900, 1200));
+            } else {
+                driver.set(ThreadGuard.protect(new EdgeDriver()));
+                /* maximize the window so that elements get maximum visibilty */
+                driver.get().manage().window().maximize();
+            }
         }
     }
 

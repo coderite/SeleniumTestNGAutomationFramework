@@ -58,8 +58,7 @@ public class Listeners implements ITestListener {
         extentTest.get().fail(failureReason.getMessage());
         extentTest.get().fail(result.getThrowable());
 
-        log.info("FAIL TEST: " + result.getMethod().getMethodName());
-
+        log.info("TEST CASED FAILED: " + result.getMethod().getMethodName());
     }
 
     /**
@@ -72,6 +71,8 @@ public class Listeners implements ITestListener {
         extentTest.get().log(Status.SKIP, "SKIPPED");
         extentTest.get().log(Status.SKIP, result.getThrowable().getMessage());
         extentTest.get().log(Status.SKIP, result.getThrowable());
+
+        log.info("TEST CASE SKIPPED" + result.getMethod().getMethodName());
     }
 
     /**
@@ -112,7 +113,7 @@ public class Listeners implements ITestListener {
             }
             testCaseName.append("]");
         }
-        log.info("START TEST : Thread #" + Thread.currentThread().getId() + " "
+        log.info("TEST CASE STARTED : Thread #" + Thread.currentThread().getId() + " "
                 + result.getMethod().getMethodName() + " : " + testCaseName.toString());
 
         /* set up an Extent Report instance using the method name */
@@ -130,7 +131,7 @@ public class Listeners implements ITestListener {
      */
     @Override
     public void onTestSuccess(ITestResult result) {
-        log.info("SUCESS: " + result.getMethod().getMethodName());
+        log.info("TEST CASE SUCESS: " + result.getMethod().getMethodName());
         extentTest.get().log(Status.PASS, "PASSED");
     }
 
