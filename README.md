@@ -48,7 +48,8 @@ A Selenium TestNG Automation framework that asserts product relevancy of filtere
 
 # TODO
 
-- update retry mechanism to get variable from properties file
+- update retry mechanism to get variable from properties file. currently throwing an error on first test case. why?
+- Jenkins setup completion
 
 - push to github DONE
 - finish ReadMe

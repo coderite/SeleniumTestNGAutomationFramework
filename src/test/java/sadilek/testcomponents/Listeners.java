@@ -52,7 +52,8 @@ public class Listeners implements ITestListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        test.addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
+        extentTest.get().addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
+        log.info("DEBUG: added screenshot: " + filePath);
 
         extentTest.get().log(Status.FAIL, "FAILED");
         extentTest.get().fail(failureReason.getMessage());

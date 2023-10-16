@@ -178,8 +178,11 @@ public class ParfumPage extends AbstractComponent {
      *                       message for debugging purposes.
      */
     public void assertEqualsMarke(WebElement product, String facet, String productPageUrl) {
+        String normalizedActual = getMarke(product).toLowerCase();
+        String normalizedExpected = facet.toLowerCase();
+
         if (!isEmptyString(facet)) {
-            Assert.assertEquals(getMarke(product).toLowerCase(), facet.toLowerCase(),
+            Assert.assertEquals(normalizedActual, normalizedExpected,
                     "marke mismatch - " + productPageUrl);
         }
     }

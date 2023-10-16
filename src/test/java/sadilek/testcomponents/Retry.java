@@ -24,7 +24,7 @@ public class Retry extends BaseTest implements IRetryAnalyzer {
         try {
             this.maxRetry = Integer.parseInt(getProperty("iRetry"));
         } catch (Exception e) {
-            log.info("iRetry error");
+            log.info("iRetry error " + e.getMessage(), e);
             this.maxRetry = 3;
         }
     }

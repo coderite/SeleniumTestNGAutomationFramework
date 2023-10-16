@@ -23,28 +23,72 @@ import org.testng.annotations.BeforeSuite;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+/**
+ * BaseTest class serving as the foundation for all test classes.
+ * 
+ * This class initializes and manages WebDriver instances in a ThreadLocal
+ * storage for thread safety during parallel execution.
+ */
 public class BaseTest {
     protected ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     protected Properties properties;
     protected static Logger log = LogManager.getLogger(BaseTest.class);
 
+    /**
+     * Retrieves the WebDriver instance associated with the current thread.
+     * 
+     * Uses ThreadLocal storage to ensure that each thread
+     * has its own isolated WebDriver instance.
+     *
+     * @return The WebDriver instance associated with the current thread.
+     */
     public WebDriver getDriver() {
         return driver.get();
     }
 
+    /**
+     * A utility method that gets a property from the command line and otherwise
+     * from the settings.properties file.
+     * 
+     * @param property the key to search the CLI or settings.properties file for
+     * @return the string value of the property.
+     * @throws Exception if things go wrong propogate the exception
+     */
     public String getProperty(String property) throws Exception {
+        /*
+         * sometimes the Retry class gets called before the loadProperties has run. To
+         * fix that we null check and manually call loadProperties
+         */
         if (properties == null) {
-            throw new Exception("Properties is not not initialized");
+            log.warn("properties were not loaded. Loading now");
+            loadProperties();
+            // throw new Exception("Properties is not not initialized");
         }
+
+        /*
+         * check if a property has been set on the command line invocation and otherwise
+         * get it from the settings.properties file
+         */
         return System.getProperty(property) != null ? System.getProperty(property)
                 : properties.getProperty(property);
     }
 
+    /**
+     * Closes the browser and removes the driver instance from the ThreadLocal
+     * storage.
+     */
     private void closeBrowser() {
         getDriver().quit();
         driver.remove();
     }
 
+    /**
+     * Loads properties from a settings file located in the resources folder.
+     * This method is annotated with @BeforeSuite, so it will be executed before
+     * any test suites run.
+     * 
+     * @throws IOException if there is an issue reading the properties file.
+     */
     @BeforeSuite
     public void loadProperties() throws IOException {
         /*
