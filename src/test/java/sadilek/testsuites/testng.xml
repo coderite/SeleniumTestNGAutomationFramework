@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite data-provider-thread-count="3" name="Suite">
+<suite data-provider-thread-count="1" name="Suite">
 
     <listeners>
         <listener class-name="sadilek.testcomponents.Listeners" />
