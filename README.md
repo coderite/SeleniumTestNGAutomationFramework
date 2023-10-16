@@ -4,12 +4,14 @@ A Selenium TestNG Automation framework that asserts product relevancy of filtere
 
 # commands to run tests
 
-- mvn -Pregression -Dbrowser=chrome
-- mvn -Pregression -Dbrowser="chrome headless"
-- mvn -Pregression -Dbrowser=firefox
-- mvn -Pregression -Dbrowser="firefox headless"
-- mvn -Pregression -Dbrowser=edge
-- mvn -Pregression -Dbrowser="edge headless"
+- mvn test -Pregression -Dbrowser=chrome
+- mvn test -Pregression -Dbrowser="chrome headless"
+- mvn test -Pregression -Dbrowser=firefox
+- mvn test -Pregression -Dbrowser="firefox headless"
+- mvn test -Pregression -Dbrowser=edge
+- mvn test -Pregression -Dbrowser="edge headless"
+
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
 
 # framework will fail a test if:
 
@@ -48,9 +50,4 @@ A Selenium TestNG Automation framework that asserts product relevancy of filtere
 
 # TODO
 
-- update retry mechanism to get variable from properties file. currently throwing an error on first test case. why?
-- Jenkins setup completion
-
-- push to github DONE
 - finish ReadMe
-- send full project details to director and Co

@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Listeners;
 
 /**
  * A util class that enables screenshots to be taken. Intended to be used from
@@ -46,15 +45,24 @@ public class ScreenshotTaker {
          */
         String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : "local";
         long currentTimeMillis = System.currentTimeMillis();
-        String screenshotPath = System.getProperty("user.dir") + "/reports/build_" + buildNumber + "/screenshots/"
+
+        /* we need an absolute path for the file of the screenshot */
+        String screenshotPathForFile = "reports/build_" + buildNumber + "/screenshots/"
+                + testCase
+                + "_"
+                + currentTimeMillis
+                + ".png";
+
+        /* we need to return a relative file path for extent reports */
+        String relativeScreenshotPath = "screenshots/"
                 + testCase
                 + "_"
                 + currentTimeMillis
                 + ".png";
 
         File source = ts.getScreenshotAs(OutputType.FILE);
-        File file = new File(screenshotPath);
+        File file = new File(screenshotPathForFile);
         FileUtils.copyFile(source, file);
-        return screenshotPath;
+        return relativeScreenshotPath;
     }
 }
