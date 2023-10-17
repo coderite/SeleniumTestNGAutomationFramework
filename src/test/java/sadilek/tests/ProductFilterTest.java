@@ -86,12 +86,8 @@ public class ProductFilterTest extends BaseTest {
              * combinations result in a single page of search results.
              */
             for (WebElement product : parfumPage.getProducts()) {
-                /*
-                 * get the product via jsoup instead of Selenium to speed up testing and since
-                 * we do not need to test the product page UI
-                 */
+                /* get the product page link from the WebElement */
                 String productPageUrl = parfumPage.getProductLink(product, retries);
-                Document document = parfumPage.getDocument(product, productPageUrl, getProperty("useragent"));
 
                 /*
                  * out of stock products do not display highlights. No specific test case
@@ -101,6 +97,12 @@ public class ProductFilterTest extends BaseTest {
                     log.info(productPageUrl + " product out of stock, skipping");
                     continue;
                 }
+
+                /*
+                 * get the product via jsoup instead of Selenium to speed up testing and since
+                 * we do not need to test the product page UI
+                 */
+                Document document = parfumPage.getDocument(product, productPageUrl, getProperty("useragent"));
 
                 /*
                  * make sure each product is in view of the browser's viewport to avoid
