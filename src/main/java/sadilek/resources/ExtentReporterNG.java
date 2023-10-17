@@ -20,7 +20,7 @@ public class ExtentReporterNG {
      *
      * @return ExtentReports object ready for use.
      */
-    public static ExtentReports getReportObject() {
+    public static ExtentReports getReportObject(String browserName) {
         /*
          * Get the current date and time using SimpleDateFormat.
          * The date-time pattern "yyyy-MM-dd_HH-mm-ss" ensures that the filenames
@@ -34,12 +34,14 @@ public class ExtentReporterNG {
          * 'local' if run without Jenkins
          */
         String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : "local";
+        String directory = browserName.trim().substring(0, 1).toLowerCase();
 
         /*
          * Create a unique filename by appending the current date and time to the
          * base file path.
          */
-        String path = System.getProperty("user.dir") + "/reports/build_" + buildNumber + "/" + currentDateAndTime
+        String path = System.getProperty("user.dir") + "/reports/" + directory + "/build_" + buildNumber + "/"
+                + currentDateAndTime
                 + ".html";
 
         /* set up the Extent Report requirements */

@@ -18,13 +18,14 @@ The test runs with the below Maven command. There is no need to set all availabl
 There is a settings.properties file with defaults for the below settings.
 
 All variables that can be set:
-**browser** (chrome headless, firefox headless, edge headless, chrome, firefox, edge)
-**url** (the base entry URL)
-**dataProvider** (relative path to the Excel file containing the test case data) default = "dataxls/testcases.xlsx"
-**retries** (number of retries for recursive methods ) default = 3
-**iRetry** (number of times a failed test case is retried before reporting it as a fail) default = 3
-**timeout** (timeout in seconds for waits) default = 20
-**useragent** (the user agent to use for JSoup requests)
+
+- **browser** (chrome headless, firefox headless, edge headless, chrome, firefox, edge)
+- **url** (the base entry URL)
+- **dataProvider** (relative path to the Excel file containing the test case data) default = "dataxls/testcases.xlsx"
+- **retries** (number of retries for recursive methods ) default = 3
+- **iRetry** (number of times a failed test case is retried before reporting it as a fail) default = 3
+- **timeout** (timeout in seconds for waits) default = 20
+- **useragent** (the user agent to use for JSoup requests)
 
 # features
 
@@ -72,3 +73,8 @@ All variables that can be set:
 # Limitations
 
 - the fur wen filter is set but product listings are not validated for the fur wen filter since no relevant (fur wen) data points to validate were found on the product page.
+
+# Todo
+
+- fix folder uniqueness issue for 3 jobs. Should be unique for each new job created. grab name of job and make that toplevel folder under reports?
+- make video address to adonis and Girish

@@ -76,17 +76,6 @@ public class ParfumPage extends AbstractComponent {
     @FindBy(css = ".out-of-stock .label-text")
     private WebElement outOfStock;
 
-    public void setFilterByType(String facetType, String facet) throws ElementInteractionException {
-        log.info(facetType + " setting filter to: " + facet);
-
-        Map<String, Boolean> facetWithKeysMap = new HashMap<>();
-        facetWithKeysMap.put("produktart", true);
-        facetWithKeysMap.put("marke", true);
-        facetWithKeysMap.put("Geschenk für", true);
-        facetWithKeysMap.put("Highlights", false);
-
-    }
-
     /**
      * Sets the filter for the specified facet (filter) while abstracting some of
      * the details away from the main test method.
@@ -557,7 +546,7 @@ public class ParfumPage extends AbstractComponent {
      * @param useAgent       the user agent JSoup will use to make HTTP requests
      * @return A Jsoup Document object containing the parsed HTML
      */
-    public Document getDocument(String productPageUrl, String userAgent) {
+    public Document getDocument(WebElement product, String productPageUrl, String userAgent) {
         Document document = null;
 
         try {
@@ -567,13 +556,16 @@ public class ParfumPage extends AbstractComponent {
                     .get();
         } catch (Exception e) {
             log.error("JSOUP: there was an error fetching the document: " + e.getMessage(), e);
-
-            Assert.fail("Failed to get product from url: " + productPageUrl, e);
+            if (productPageUrl != null) {
+                Assert.fail("Failed to retrieve product page via HTTP request for " + getBrand(product) + " "
+                        + productPageUrl);
+            }
+            Assert.fail("Item" + " does not have a product URL" + getBrand(product));
         }
 
         /* Assert fail in case the document is null */
         if (document == null) {
-            Assert.fail("Document is null for the URL: " + productPageUrl);
+            Assert.fail("Document is null for the product: " + getBrand(product) + " " + productPageUrl);
         }
 
         return document;
@@ -698,5 +690,10 @@ public class ParfumPage extends AbstractComponent {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /* internal util method to grab the product name */
+    private String getBrand(WebElement product) {
+        return product.findElement(By.cssSelector(".name")).getText();
     }
 }

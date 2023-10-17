@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
  */
 public class ScreenshotTaker {
     private WebDriver driver;
+    private String browserName;
     private Logger log = LogManager.getLogger(ScreenshotTaker.class);
 
     /**
@@ -45,9 +46,10 @@ public class ScreenshotTaker {
          */
         String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : "local";
         long currentTimeMillis = System.currentTimeMillis();
+        String directory = browserName.substring(0, 1).toLowerCase();
 
         /* we need an absolute path for the file of the screenshot */
-        String screenshotPathForFile = "reports/build_" + buildNumber + "/screenshots/"
+        String screenshotPathForFile = "reports/" + directory + "/build_" + buildNumber + "/screenshots/"
                 + testCase
                 + "_"
                 + currentTimeMillis
@@ -64,5 +66,9 @@ public class ScreenshotTaker {
         File file = new File(screenshotPathForFile);
         FileUtils.copyFile(source, file);
         return relativeScreenshotPath;
+    }
+
+    public void setBrowser(String browserName) {
+        this.browserName = browserName;
     }
 }

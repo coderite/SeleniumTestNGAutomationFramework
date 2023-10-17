@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -90,7 +91,7 @@ public class ProductFilterTest extends BaseTest {
                  * we do not need to test the product page UI
                  */
                 String productPageUrl = parfumPage.getProductLink(product, retries);
-                Document document = parfumPage.getDocument(productPageUrl, getProperty("useragent"));
+                Document document = parfumPage.getDocument(product, productPageUrl, getProperty("useragent"));
 
                 /*
                  * out of stock products do not display highlights. No specific test case

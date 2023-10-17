@@ -23,8 +23,14 @@ public class Listeners implements ITestListener {
     private Logger log = LogManager.getLogger(Listeners.class);
 
     ExtentTest test;
-    ExtentReports extent = ExtentReporterNG.getReportObject();
+    ExtentReports extent;
     ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+
+    @Override
+    public void onStart(ITestContext context) {
+        String browserName = (String) context.getAttribute("browserName");
+        extent = ExtentReporterNG.getReportObject(browserName);
+    }
 
     /**
      * When a test fails log the the results to Extent Reports
@@ -33,6 +39,7 @@ public class Listeners implements ITestListener {
      */
     @Override
     public void onTestFailure(ITestResult result) {
+        ITestContext context = result.getTestContext();
         WebDriver threadSafeDriver = ((BaseTest) result.getInstance()).getDriver();
 
         /* Capture the failure reason so we can process the response */
@@ -46,12 +53,16 @@ public class Listeners implements ITestListener {
          * 
          */
         ScreenshotTaker screenshotTaker = new ScreenshotTaker(threadSafeDriver);
+        String browser = (String) context.getAttribute("browserName");
+        screenshotTaker.setBrowser(browser);
+
         String filePath = null;
         try {
             filePath = screenshotTaker.getScreenshot(result.getMethod().getMethodName());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         extentTest.get().addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
         log.info("DEBUG: added screenshot: " + filePath);
 

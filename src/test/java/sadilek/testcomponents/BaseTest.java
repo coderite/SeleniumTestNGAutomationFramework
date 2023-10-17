@@ -114,11 +114,16 @@ public class BaseTest {
      */
     @BeforeMethod
     public void setContext(ITestContext context) {
+
+        context.setAttribute("driver", getDriver());
+    }
+
+    @BeforeSuite
+    public void setContextBeforeSuite(ITestContext context) {
         String browserName;
         try {
             browserName = getProperty("browser");
             context.setAttribute("browserName", browserName);
-            context.setAttribute("driver", getDriver());
         } catch (Exception e) {
             log.error("setContext: could not get the browserName");
             e.printStackTrace();
