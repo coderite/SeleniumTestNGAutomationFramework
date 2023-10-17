@@ -73,7 +73,3 @@ All variables that can be set:
 # Limitations
 
 - the fur wen filter is set but product listings are not validated for the fur wen filter since no relevant (fur wen) data points to validate were found on the product page.
-
-# Todo
-
-- fix folder uniqueness issue for 3 jobs. Should be unique for each new job created. grab name of job and make that toplevel folder under reports?
