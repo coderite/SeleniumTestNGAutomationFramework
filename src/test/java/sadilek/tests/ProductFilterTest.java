@@ -3,6 +3,7 @@ package sadilek.tests;
 import java.util.HashMap;
 
 import org.jsoup.nodes.Document;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -129,11 +130,11 @@ public class ProductFilterTest extends BaseTest {
              * case
              */
         } catch (ElementInteractionException e) {
-            log.error("A custom ElementInteractionException was thrown", e);
-            Assert.fail("Test interrupted due to a known Exception", e);
+            Assert.fail("Test failed due to an Element Interaction exception" + e.getMessage());
+        } catch (StaleElementReferenceException e) {
+            Assert.fail("Test failed due to a Stale element exception " + e.getMessage());
         } catch (Exception e) {
-            log.error("An unknown exception was thrown!", e);
-            Assert.fail("Test interrupted due to an unkown Exception", e);
+            Assert.fail("Test failed due to an unkown exception" + e.getMessage());
         }
     }
 
