@@ -77,4 +77,3 @@ All variables that can be set:
 # Todo
 
 - fix folder uniqueness issue for 3 jobs. Should be unique for each new job created. grab name of job and make that toplevel folder under reports?
-- make video address to adonis and Girish
