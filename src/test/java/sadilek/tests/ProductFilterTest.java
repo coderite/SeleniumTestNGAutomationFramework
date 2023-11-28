@@ -6,7 +6,6 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -103,7 +102,7 @@ public class ProductFilterTest extends BaseTest {
                  * get the product via jsoup instead of Selenium to speed up testing and since
                  * we do not need to test the product page UI
                  */
-                Document document = parfumPage.getDocument(product, productPageUrl, getProperty("useragent"));
+                Document document = parfumPage.getDocument(product, productPageUrl);
 
                 /*
                  * make sure each product is in view of the browser's viewport to avoid

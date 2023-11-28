@@ -1,8 +1,7 @@
 package sadilek.pageobjects;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
@@ -13,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -546,14 +546,37 @@ public class ParfumPage extends AbstractComponent {
      * @param useAgent       the user agent JSoup will use to make HTTP requests
      * @return A Jsoup Document object containing the parsed HTML
      */
-    public Document getDocument(WebElement product, String productPageUrl, String userAgent) {
+    public Document getDocument(WebElement product, String productPageUrl) {
         Document document = null;
 
         try {
-            /* get the Document object of the product page using JSoup */
-            document = Jsoup.connect(productPageUrl)
-                    .userAgent(userAgent)
-                    .get();
+            /*
+             * get the Document object of the product page by opening a new tab in the
+             * browser instance, switching to it, and then closing it
+             */
+
+            // Store the original tab's handle
+            String originalTab = driver.getWindowHandle();
+
+            // Open a new tab
+            ((JavascriptExecutor) driver).executeScript("window.open()");
+
+            // Switch to the new tab
+            ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+            driver.switchTo().window(tabs.get(1)); // assumes only one new tab is opened
+
+            // Navigate to the URL in the new tab
+            driver.get(productPageUrl);
+
+            // Get the page source from the new tab
+            String pageSource = driver.getPageSource();
+
+            // Parse the page source with Jsoup to create a Document object
+            document = Jsoup.parse(pageSource);
+
+            // Close the new tab and switch back to the original tab
+            driver.close();
+            driver.switchTo().window(originalTab);
         } catch (Exception e) {
             log.error("JSOUP: there was an error fetching the document: " + e.getMessage(), e);
             if (productPageUrl != null) {

@@ -25,7 +25,6 @@ All variables that can be set:
 - **retries** (number of retries for recursive methods ) default = 3
 - **iRetry** (number of times a failed test case is retried before reporting it as a fail) default = 3
 - **timeout** (timeout in seconds for waits) default = 20
-- **useragent** (the user agent to use for JSoup requests)
 
 # features
 
@@ -42,7 +41,7 @@ All variables that can be set:
 - customizable settings in the settings.properties file which can also be set via the CLI or Jenkins parameters.
 - Extent Reports accessible via Jenkins artifact archives using dynamic folders based on build numbers.
 - highlight(sale, neu), marke, produktart data points are parsed directly from the product listing on the parfum page filtered results.
-- highlight(limitier) and geschenk fur data points are parsed from the product page using a JSoup get request.
+- highlight(limitier) and geschenk fur data points are parsed from the product page by grabbing the page source after opening the product page in a new tab.
 
 # framework will fail a test if:
 
@@ -59,7 +58,7 @@ All variables that can be set:
 - test case data populated via Apache POI (external Excel file)
 - Jenkins used to schedule cross-browser test runs. 3 jobs are set up for Chrome, Firefox, and Edge. These can run on any schedule required. All reports resulting from that can be viewed from within the Jenkins UI.
 - Strategic recursive POM methods to combat flaky UI (e.g. the setFilter method method will retry if something causes them flak. Mostly happens with setFilter. Sometimes the cookie modal on the homepage flaks due to Douglas anti-scrape or rate limit protection but only after a heavy load of parallel job runs).
-- JSoup used to query data from individual product pages for the limitier and geschenk fur data points. Used JSoup instead of a POM class in order to speed up execution and since we are not intending to interact with product page UI.
+- Page source data is pulled from product pages by opening product pages in new tabs and then closing them. This was done to avoid having to re-instantiate WebDriver instances.Page source is to used to query data from individual product pages for the limitier and geschenk fur data points. Used this approach instead of a POM class in order to speed up execution and since we are not intending to interact with product page UI.
 - To speed up tests, only the first page of products are parsed for relevancy. Reasons are that most test cases result in only 1 page of results. Additional pagination support can be added back in if required.
 
 # Reporting
