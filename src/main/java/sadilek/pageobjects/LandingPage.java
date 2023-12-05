@@ -77,6 +77,10 @@ public class LandingPage extends AbstractComponent {
     }
 
     /**
+     * REFACTOR: if modal popup is failing, likely cause is 503. Recursive won't
+     * have any effect in this case. Maybe fail the test gracefully or sugggest
+     * proxy rotation.
+     * 
      * wait for, then click to close the Douglas modal that appears on a new browser
      * session. Retry recursively after refreshing page in case of exceptions.
      * Needed due to Douglas sometime denying access probably as a result of too

@@ -76,6 +76,11 @@ public class ParfumPage extends AbstractComponent {
     @FindBy(css = ".out-of-stock .label-text")
     private WebElement outOfStock;
 
+    /*
+     * REFACTOR: The setFilter methods should refactored into a single
+     * method. @Lucas
+     */
+
     /**
      * Sets the filter for the specified facet (filter) while abstracting some of
      * the details away from the main test method.
@@ -278,17 +283,31 @@ public class ParfumPage extends AbstractComponent {
         }
     }
 
+    /**
+     * REFACTOR: add JavaDoc info for this method.
+     * 
+     * @param produktart
+     * @param highlight
+     * @param marke
+     * @param geschenkFur
+     * @param furWen
+     */
     public void assertFacetsSetCorrectly(String produktart, String highlight, String marke, String geschenkFur,
             String furWen) {
         String[] expected = { produktart.toLowerCase(), highlight.toLowerCase(), marke.toLowerCase(),
                 geschenkFur.toLowerCase(), furWen.toLowerCase() };
         String actual = getSelectedFacets().toLowerCase();
 
-        for (String exp : expected) {
-            if (!actual.contains(exp)) {
+        for (String facet : expected) {
+            if (!actual.contains(facet)) {
                 log.info("Filters not correctly set");
                 log.info("filters: ACTUAL: " + actual);
                 log.info("filters: EXPECTED: " + expected.toString());
+
+                /*
+                 * we found a difference in the expected and actual filters that have been
+                 * displayed. Fail the test.
+                 */
                 Assert.assertEquals(actual, expected, "The facets were not properly set");
             }
         }
@@ -324,22 +343,30 @@ public class ParfumPage extends AbstractComponent {
 
         // make this recurive for when the dropdown does not open. //
         try {
-
             /*
              * make sure the section is loaded by checking for the h1 header above the
              * filters
              */
             // waitForVisibilityOf(facets.get(0));
 
+            /* click to open the dropdown filter in the UI */
             openFilterDropdown(filterName, retries);
 
-            /* if withKeys boolean is true, enter the payload into the search field */
+            /*
+             * if the withKeys boolean parameter is set to true, enter the facet name into
+             * the search field
+             */
             if (withKeys) {
                 inputFilterSearch(facet);
             }
 
+            /* select the filter in the dropdown list */
             selectFilterOption(facet);
 
+            /*
+             * check the list of tags displayed underneath the filter area to confirm our
+             * selection was successful.
+             */
             waitForFilterToBeEnabled(facet);
 
             closeFilter();
@@ -353,6 +380,8 @@ public class ParfumPage extends AbstractComponent {
                 | StaleElementReferenceException | ElementNotInteractableException e) {
 
             /*
+             * REFACTOR: should this be moved to the top of the method block? Why execute
+             * the block if we run out of retries?
              * retry to set filter at least N number of times to avoid flaky set filter
              * issues
              */
@@ -363,6 +392,7 @@ public class ParfumPage extends AbstractComponent {
                     + localRetries);
             // refresh page as well
             driver.navigate().refresh();
+            // return the method again until we are out of retries
             setFilter(filterName, facet, driver, withKeys, localRetries - 1);
 
         }
@@ -464,7 +494,6 @@ public class ParfumPage extends AbstractComponent {
         /*
          * loop over dropdown options and click the entry that matches the option name
          */
-
         try {
             driver.findElements(By.cssSelector("a[class*='facet-option']"))
                     .stream()
@@ -534,16 +563,15 @@ public class ParfumPage extends AbstractComponent {
     public List<WebElement> getProducts() {
         waitForElementLocated(By.className("product-tile"));
         return driver.findElements(By.className("product-tile"));
-
     }
 
     /**
      * Fetches and parses the HTML document of a given product page URL.
-     * Uses Jsoup to connect to the URL and retrieve its HTML content.
+     * Opens a new tab in the browser and then retrieves the page source (HTML
+     * content).
      * The HTML is then parsed into a Jsoup Document object which is returned.
      *
      * @param productPageUrl The URL of the product page to fetch and parse.
-     * @param useAgent       the user agent JSoup will use to make HTTP requests
      * @return A Jsoup Document object containing the parsed HTML
      */
     public Document getDocument(WebElement product, String productPageUrl) {

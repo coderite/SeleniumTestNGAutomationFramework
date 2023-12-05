@@ -91,7 +91,8 @@ public class ProductFilterTest extends BaseTest {
 
                 /*
                  * out of stock products do not display highlights. No specific test case
-                 * requirement given, so skip product when encountered
+                 * requirement given to account for out of stock items, so skip out of stock
+                 * products when encountered
                  */
                 if (parfumPage.isOutOfStock(product)) {
                     log.info(productPageUrl + " product out of stock, skipping");
@@ -99,7 +100,7 @@ public class ProductFilterTest extends BaseTest {
                 }
 
                 /*
-                 * get the product via jsoup instead of Selenium to speed up testing and since
+                 * get the product page document via page source to speed up the execution since
                  * we do not need to test the product page UI
                  */
                 Document document = parfumPage.getDocument(product, productPageUrl);

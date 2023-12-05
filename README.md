@@ -60,6 +60,7 @@ All variables that can be set:
 - Strategic recursive POM methods to combat flaky UI (e.g. the setFilter method method will retry if something causes them flak. Mostly happens with setFilter. Sometimes the cookie modal on the homepage flaks due to Douglas anti-scrape or rate limit protection but only after a heavy load of parallel job runs).
 - Page source data is pulled from product pages by opening product pages in new tabs and then closing them. This was done to avoid having to re-instantiate WebDriver instances.Page source is to used to query data from individual product pages for the limitier and geschenk fur data points. Used this approach instead of a POM class in order to speed up execution and since we are not intending to interact with product page UI.
 - To speed up tests, only the first page of products are parsed for relevancy. Reasons are that most test cases result in only 1 page of results. Additional pagination support can be added back in if required.
+- not implemented but could be improved with proxy rotation service.
 
 # Reporting
 

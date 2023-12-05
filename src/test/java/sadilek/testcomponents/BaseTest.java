@@ -30,7 +30,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  * storage for thread safety during parallel execution.
  */
 public class BaseTest {
-    protected ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    protected ThreadLocal<WebDriver> driver = new ThreadLocal<>(); // make the driver instance thread safe.
     protected Properties properties;
     protected static Logger log = LogManager.getLogger(BaseTest.class);
 
@@ -97,7 +97,11 @@ public class BaseTest {
          */
         try {
             FileInputStream fis = new FileInputStream(
-                    System.getProperty("user.dir") + "/src/main/java/sadilek/resources/settings.properties");
+                    System.getProperty("user.dir") + "/src/main/java/sadilek/resources/settings.properties"); // get rid
+                                                                                                              // of
+                                                                                                              // magic
+                                                                                                              // strings!
+                                                                                                              // REFACTOR
             properties = new Properties();
             properties.load(fis);
         } catch (Exception ex) {
@@ -114,7 +118,6 @@ public class BaseTest {
      */
     @BeforeMethod
     public void setContext(ITestContext context) {
-
         context.setAttribute("driver", getDriver());
     }
 

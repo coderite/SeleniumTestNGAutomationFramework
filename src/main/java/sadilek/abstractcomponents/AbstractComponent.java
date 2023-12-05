@@ -50,6 +50,11 @@ public class AbstractComponent {
         }
     }
 
+    /**
+     * Get a string facets that we selected in the UI.
+     * 
+     * @return String of the facet tags found underneath the filter dropdowns.
+     */
     protected String getSelectedFacets() {
         return driver.findElements(By.cssSelector(".selected-facets a"))
                 .stream()
@@ -59,6 +64,8 @@ public class AbstractComponent {
 
     /**
      * Waits until a facet filter becomes enabled, based on the provided payload.
+     * If a filter is enabled a tag appears underneath the filter area. This method
+     * wait for our selected filter to appear in this list of tags.
      * 
      * @param facet the facet to check and wait for
      */
