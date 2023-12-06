@@ -23,6 +23,11 @@ public class Retry extends BaseTest implements IRetryAnalyzer {
     public Retry() {
         try {
             this.maxRetry = Integer.parseInt(getProperty("iRetry"));
+
+            /*
+             * if something goes wrong retrieving a the max retry property from the
+             * settings.properties list, set max retries to 3
+             */
         } catch (Exception e) {
             log.info("iRetry error " + e.getMessage(), e);
             this.maxRetry = 3;
@@ -32,7 +37,7 @@ public class Retry extends BaseTest implements IRetryAnalyzer {
     /**
      * Retry is called each time a test fails.
      * Checks the maxEntry variable and let's the IRetryAnalyzer know where it
-     * shoudl continue to retry or whether to fail the test case.
+     * should continue to retry or whether to fail the test case.
      */
     @Override
     public boolean retry(ITestResult result) {

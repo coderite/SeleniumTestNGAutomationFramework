@@ -97,11 +97,7 @@ public class BaseTest {
          */
         try {
             FileInputStream fis = new FileInputStream(
-                    System.getProperty("user.dir") + "/src/main/java/sadilek/resources/settings.properties"); // get rid
-                                                                                                              // of
-                                                                                                              // magic
-                                                                                                              // strings!
-                                                                                                              // REFACTOR
+                    System.getProperty("user.dir") + "/src/main/java/sadilek/resources/settings.properties");
             properties = new Properties();
             properties.load(fis);
         } catch (Exception ex) {

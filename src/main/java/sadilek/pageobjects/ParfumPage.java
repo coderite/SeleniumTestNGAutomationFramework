@@ -76,11 +76,6 @@ public class ParfumPage extends AbstractComponent {
     @FindBy(css = ".out-of-stock .label-text")
     private WebElement outOfStock;
 
-    /*
-     * REFACTOR: The setFilter methods should refactored into a single
-     * method. @Lucas
-     */
-
     /**
      * Sets the filter for the specified facet (filter) while abstracting some of
      * the details away from the main test method.
@@ -284,7 +279,10 @@ public class ParfumPage extends AbstractComponent {
     }
 
     /**
-     * REFACTOR: add JavaDoc info for this method.
+     * Compare the facets (filters) actually set in th UI with the facets we expect
+     * to be set.
+     * If they do not match, fail the test. This is useful in case a flaky filter
+     * causes an expected issue.
      * 
      * @param produktart
      * @param highlight
@@ -380,8 +378,6 @@ public class ParfumPage extends AbstractComponent {
                 | StaleElementReferenceException | ElementNotInteractableException e) {
 
             /*
-             * REFACTOR: should this be moved to the top of the method block? Why execute
-             * the block if we run out of retries?
              * retry to set filter at least N number of times to avoid flaky set filter
              * issues
              */

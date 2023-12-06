@@ -50,7 +50,6 @@ public class Listeners implements ITestListener {
 
         /*
          * Take a screenshot using our utility class from the utils folder.
-         * 
          */
         ScreenshotTaker screenshotTaker = new ScreenshotTaker(threadSafeDriver);
         String browser = (String) context.getAttribute("browserName");
@@ -130,7 +129,9 @@ public class Listeners implements ITestListener {
 
         /* set up an Extent Report instance using the method name */
         test = extent.createTest(result.getMethod().getMethodName() + " : " + testCaseName.toString());
-        extentTest.set(test); // assign the test to a thread-local instance to enable parallel execution
+
+        /* assign the test to a thread-local instance to enable parallel execution */
+        extentTest.set(test);
 
         /* log the browser being used in Extent Reports */
         extentTest.get().log(Status.INFO, "browser used: " + browserName);
