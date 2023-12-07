@@ -148,7 +148,6 @@ public class ParfumPage extends AbstractComponent {
      */
     public void assertEqualsProduktart(WebElement product, String expected, String productPageUrl) {
         if (!isEmptyString(expected)) {
-
             String normalizedActual = getProduktart(product).toLowerCase();
             String normalizedExpected = expected.toLowerCase();
 
@@ -220,7 +219,7 @@ public class ParfumPage extends AbstractComponent {
 
             /* handle the LIMITIERT highlight */
             if (highlight.equalsIgnoreCase("Limitiert")) {
-                String normalizedActual = document.select(".eyecatcher span").text().toLowerCase();
+                String normalizedActual = document.select(".product-details__flags").text().toLowerCase();
 
                 /* assert the right highlight is being displayed */
                 if (!normalizedActual.contains(normalizedExpected)) {
